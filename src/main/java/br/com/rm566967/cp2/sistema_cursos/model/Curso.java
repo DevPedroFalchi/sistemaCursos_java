@@ -1,0 +1,25 @@
+package br.com.rm566967.cp2.sistema_cursos.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
+
+@NoArgsConstructor
+@Entity
+@Getter
+@Setter
+
+public class Curso {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String titulo;
+
+    private String descricao;
+}
