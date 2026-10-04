@@ -19,7 +19,11 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
+    @Setter
     private String titulo;
 
+    @Getter
+    @Setter
     private String descricao;
 }
