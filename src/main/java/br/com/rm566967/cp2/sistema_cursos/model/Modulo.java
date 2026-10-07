@@ -19,16 +19,12 @@ public class Modulo {
     private Long id;
 
 
-    @Getter
-    @Setter
     private String titulo;
 
-    @Getter
-    @Setter
+
     private Integer ordem;
 
-    @Getter
-    @Setter
+
     private Integer cargaHoraria;
 
 

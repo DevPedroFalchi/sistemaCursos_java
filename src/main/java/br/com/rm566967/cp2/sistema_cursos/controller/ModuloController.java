@@ -3,7 +3,7 @@ package br.com.rm566967.cp2.sistema_cursos.controller;
 import br.com.rm566967.cp2.sistema_cursos.dto.ModuloRequest;
 import br.com.rm566967.cp2.sistema_cursos.dto.ModuloResponse;
 import br.com.rm566967.cp2.sistema_cursos.mapper.ModuloMapper;
-import br.com.rm566967.cp2.sistema_cursos.mapper.PageResponse;
+import br.com.rm566967.cp2.sistema_cursos.dto.PageResponse;
 import br.com.rm566967.cp2.sistema_cursos.model.Modulo;
 import br.com.rm566967.cp2.sistema_cursos.service.ModuloService;
 import jakarta.validation.Valid;
@@ -28,9 +28,7 @@ public class ModuloController {
     public PageResponse<ModuloResponse> findAll(@RequestParam(required = false) Long id,
                                                 @RequestParam(required = false, defaultValue = "0") Integer page,
                                                 @RequestParam(required = false, defaultValue = "10") Integer sizePage){
-        Page<Modulo> pageResult = cursoId != null
-                ? moduloService.findByProjectId, page, sizePage)
-                : moduloService.findAll(page, sizePage);
+
         return PageResponse.from(pageResult.map(ModuloMapper::toResponse));
     }
 
@@ -48,6 +46,8 @@ public class ModuloController {
         modulo.setTitulo(request.titulo());
         modulo.setCargaHoraria(request.cargaHoraria());
         modulo.setOrdem(request.ordem());
+        Modulo created = ModuloService.create();
+        return ResponseEntity.ok(ModuloMapper.toResponse(created));
     }
 
     @PutMapping("/{id}")
@@ -62,7 +62,7 @@ public class ModuloController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<void> delete(@PathVariable @Positive Long id){
+    public ResponseEntity<Void> delete(@PathVariable @Positive Long id){
         moduloService.delete(id);
         return ResponseEntity.noContent().build();
     }

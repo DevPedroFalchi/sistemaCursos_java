@@ -3,7 +3,7 @@ package br.com.rm566967.cp2.sistema_cursos.controller;
 import br.com.rm566967.cp2.sistema_cursos.dto.CursoRequest;
 import br.com.rm566967.cp2.sistema_cursos.dto.CursoResponse;
 import br.com.rm566967.cp2.sistema_cursos.mapper.CursoMapper;
-import br.com.rm566967.cp2.sistema_cursos.mapper.PageResponse;
+import br.com.rm566967.cp2.sistema_cursos.dto.PageResponse;
 import br.com.rm566967.cp2.sistema_cursos.model.Curso;
 import br.com.rm566967.cp2.sistema_cursos.service.CursoService;
 import jakarta.validation.Valid;

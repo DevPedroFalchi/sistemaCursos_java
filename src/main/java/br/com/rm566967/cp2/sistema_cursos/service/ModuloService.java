@@ -3,7 +3,7 @@ package br.com.rm566967.cp2.sistema_cursos.service;
 import br.com.rm566967.cp2.sistema_cursos.model.Modulo;
 import org.springframework.data.domain.Page;
 
-public class ModuloService {
+public interface ModuloService {
 
     Page<Modulo> findAll(Integer page, Integer size);
 
