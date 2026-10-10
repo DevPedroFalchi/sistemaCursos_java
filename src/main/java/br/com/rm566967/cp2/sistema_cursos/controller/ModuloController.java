@@ -1,5 +1,4 @@
 package br.com.rm566967.cp2.sistema_cursos.controller;
-
 import br.com.rm566967.cp2.sistema_cursos.dto.ModuloRequest;
 import br.com.rm566967.cp2.sistema_cursos.dto.ModuloResponse;
 import br.com.rm566967.cp2.sistema_cursos.mapper.ModuloMapper;
@@ -29,15 +28,17 @@ public class ModuloController {
                                                 @RequestParam(required = false, defaultValue = "0") Integer page,
                                                 @RequestParam(required = false, defaultValue = "10") Integer sizePage){
 
+        Page<Modulo> pageResult = cursoId != null
+                ? moduloService.findByCursoId(cursoId, page, sizePage)
+                : moduloService.findAll(page, sizePage);
+
         return PageResponse.from(pageResult.map(ModuloMapper::toResponse));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EntityModel<ModuloResponse>> findById(@PathVariable @Positive Long id){
+    public ResponseEntity<ModuloResponse> findById(@PathVariable @Positive Long id){
         Modulo modulo = moduloService.findById(id);
-        return moduloService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(ModuloMapper.toResponse(modulo));
     }
 
     @PostMapping
@@ -46,7 +47,7 @@ public class ModuloController {
         modulo.setTitulo(request.titulo());
         modulo.setCargaHoraria(request.cargaHoraria());
         modulo.setOrdem(request.ordem());
-        Modulo created = ModuloService.create();
+        Modulo created = moduloService.create(modulo);
         return ResponseEntity.ok(ModuloMapper.toResponse(created));
     }
 

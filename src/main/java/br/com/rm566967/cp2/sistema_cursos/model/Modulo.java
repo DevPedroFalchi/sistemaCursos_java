@@ -1,9 +1,6 @@
 package br.com.rm566967.cp2.sistema_cursos.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,5 +24,7 @@ public class Modulo {
 
     private Integer cargaHoraria;
 
+    @ManyToOne
+    private Curso curso;
 
 }
