@@ -6,7 +6,7 @@ public interface ModuloService {
 
     Page<Modulo> findAll(Integer page, Integer size);
     Page<Modulo> findByCursoId(Long cursoId, Integer page, Integer size);
-    Page<Modulo> findModuloId(Long moduloId, Integer page, Integer size);
+    //Page<Modulo> findModuloId(Long moduloId, Integer page, Integer size);
     
 
     Modulo findById(Long id);

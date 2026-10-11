@@ -24,7 +24,7 @@ public class ModuloController {
     }
 
     @GetMapping
-    public PageResponse<ModuloResponse> findAll(@RequestParam(required = false) Long id,
+    public PageResponse<ModuloResponse> findAll(@RequestParam(required = false) Long cursoId,
                                                 @RequestParam(required = false, defaultValue = "0") Integer page,
                                                 @RequestParam(required = false, defaultValue = "10") Integer sizePage){
 

@@ -8,12 +8,13 @@ public final class ModuloMapper {
 
     private ModuloMapper(){}
 
-    public static ModuloResponse toResponse(Modulo modulo){
+    public static ModuloResponse toResponse(Modulo modulo) {
         return new ModuloResponse(
                 modulo.getId(),
                 modulo.getTitulo(),
                 modulo.getOrdem(),
-                modulo.getCargaHoraria()
+                modulo.getCargaHoraria(),
+                modulo.getCurso() != null ? modulo.getCurso().getId() : null
         );
     }
 }

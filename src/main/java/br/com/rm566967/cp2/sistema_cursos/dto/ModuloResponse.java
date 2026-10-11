@@ -4,6 +4,7 @@ public record ModuloResponse(
         Long id,
         String titulo,
         Integer ordem,
-        Integer cargaHoraria)
+        Integer cargaHoraria,
+        Long cursoId)
     {
 }

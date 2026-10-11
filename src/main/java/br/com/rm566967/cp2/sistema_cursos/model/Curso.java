@@ -1,29 +1,30 @@
 package br.com.rm566967.cp2.sistema_cursos.model;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import br.com.rm566967.cp2.sistema_cursos.controller.CursoStatus;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
+import java.util.List;
+import java.util.ArrayList;
+
 
 @NoArgsConstructor
 @Entity
 @Getter
 @Setter
-
 public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Setter
     private String titulo;
 
-    @Getter
-    @Setter
     private String descricao;
+
+    @Enumerated(EnumType.STRING)
+    private CursoStatus status;
+
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Modulo> modulos = new ArrayList<>();
+
 }

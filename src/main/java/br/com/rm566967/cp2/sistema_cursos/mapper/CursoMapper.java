@@ -8,15 +8,12 @@ public final class CursoMapper {
 
     private CursoMapper(){}
 
-    public static Curso toEntity(CursoRequest cursoRequest){
-        return new Curso(cursoRequest.id());
-    }
-
-    public static CursoResponse toResponse(Curso curso){
+    public static CursoResponse toResponse(Curso curso) {
         return new CursoResponse(
                 curso.getId(),
                 curso.getTitulo(),
-                curso.getDescricao()
+                curso.getDescricao(),
+                curso.getStatus()
         );
     }
 }
