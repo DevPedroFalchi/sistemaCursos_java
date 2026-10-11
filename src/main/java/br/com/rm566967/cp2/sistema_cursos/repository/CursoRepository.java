@@ -1,6 +1,5 @@
 package br.com.rm566967.cp2.sistema_cursos.repository;
-
-import br.com.rm566967.cp2.sistema_cursos.controller.CursoStatus;
+import br.com.rm566967.cp2.sistema_cursos.model.CursoStatus;
 import br.com.rm566967.cp2.sistema_cursos.model.Curso;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

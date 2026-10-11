@@ -4,6 +4,7 @@ import br.com.rm566967.cp2.sistema_cursos.dto.CursoResponse;
 import br.com.rm566967.cp2.sistema_cursos.mapper.CursoMapper;
 import br.com.rm566967.cp2.sistema_cursos.dto.PageResponse;
 import br.com.rm566967.cp2.sistema_cursos.model.Curso;
+import br.com.rm566967.cp2.sistema_cursos.model.CursoStatus;
 import br.com.rm566967.cp2.sistema_cursos.service.CursoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -55,7 +56,7 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CursoResponse> updateCurso(@PathVariable Long id, @RequestBody CursoRequest request){
+    public ResponseEntity<CursoResponse> updateCurso(@PathVariable @Positive Long id, @RequestBody CursoRequest request){
         Curso curso = cursoService.findById(id);
         curso.setTitulo(request.titulo());
         curso.setDescricao(request.descricao());
@@ -64,9 +65,19 @@ public class CursoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CursoResponse> deleteCurso(@PathVariable Long id){
+    public ResponseEntity<CursoResponse> deleteCurso(@PathVariable @Positive Long id){
         this.cursoService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // no CursoController
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<CursoResponse> mudarStatus(@PathVariable @Positive Long id,
+                                                     @RequestParam CursoStatus status) {
+        Curso curso = cursoService.findById(id);
+        curso.setStatus(status);   // aqui a validação de transição roda
+        Curso atualizado = cursoService.update(id, curso);
+        return ResponseEntity.ok(CursoMapper.toResponse(atualizado));
     }
 
 }

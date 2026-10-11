@@ -14,7 +14,7 @@ public class MultipleOfValidator implements ConstraintValidator<MultipleOf, Inte
     @Override
     public boolean isValid(Integer value, ConstraintValidatorContext context) {
         if (value == null) {
-            return true;   // nulo é tratado pelo @NotNull, não aqui
+            return true;
         }
         return value % multiplo == 0;
     }

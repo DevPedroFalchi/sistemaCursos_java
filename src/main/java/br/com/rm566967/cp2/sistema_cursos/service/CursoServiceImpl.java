@@ -1,5 +1,5 @@
 package br.com.rm566967.cp2.sistema_cursos.service;
-import br.com.rm566967.cp2.sistema_cursos.controller.CursoStatus;
+import br.com.rm566967.cp2.sistema_cursos.model.CursoStatus;
 import br.com.rm566967.cp2.sistema_cursos.model.Curso;
 import br.com.rm566967.cp2.sistema_cursos.repository.CursoRepository;
 import org.springframework.data.domain.Page;
@@ -38,9 +38,10 @@ public class CursoServiceImpl implements CursoService {
 
     @Override
     public Curso update(Long id, Curso curso) {
-        Curso existente = findById(id);
-        curso.setId(existente.getId());
-        return cursoRepository.save(curso);
+        Curso existente = findById(id);          // já tem o id e o status atuais
+        existente.setTitulo(curso.getTitulo());
+        existente.setDescricao(curso.getDescricao());
+        return cursoRepository.save(existente);
     }
 
     @Override

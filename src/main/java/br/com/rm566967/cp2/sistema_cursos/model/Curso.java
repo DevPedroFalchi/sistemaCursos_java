@@ -1,5 +1,4 @@
 package br.com.rm566967.cp2.sistema_cursos.model;
-import br.com.rm566967.cp2.sistema_cursos.controller.CursoStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,20 +10,28 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Entity
 @Getter
-@Setter
 public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     private String titulo;
 
+    @Setter
     private String descricao;
 
     @Enumerated(EnumType.STRING)
-    private CursoStatus status;
+    private CursoStatus status = CursoStatus.RASCUNHO;
 
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Modulo> modulos = new ArrayList<>();
+    private final List<Modulo> modulos = new ArrayList<>();
 
+    public void setStatus(CursoStatus novo) {
+        if (this.status != null && !this.status.podeIrPara(novo)) {
+            throw new IllegalStateException(
+                    "Transição inválida de " + this.status + " para " + novo);
+        }
+        this.status = novo;
+    }
 }

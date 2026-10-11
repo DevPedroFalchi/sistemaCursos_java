@@ -1,5 +1,4 @@
 package br.com.rm566967.cp2.sistema_cursos.configurations;
-
 import br.com.rm566967.cp2.sistema_cursos.dto.ErrorResponse;
 import br.com.rm566967.cp2.sistema_cursos.dto.ValidationErroResponse;
 import br.com.rm566967.cp2.sistema_cursos.exceptions.ResourceNotFoundException;
@@ -8,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -46,6 +44,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex) {
+        //ex.printStackTrace();
         ErrorResponse body = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),

@@ -12,8 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
-@RequestMapping("/api/modulos")
 @Validated
 public class ModuloController {
 
@@ -23,46 +24,30 @@ public class ModuloController {
         this.moduloService = moduloService;
     }
 
-    @GetMapping
-    public PageResponse<ModuloResponse> findAll(@RequestParam(required = false) Long cursoId,
-                                                @RequestParam(required = false, defaultValue = "0") Integer page,
-                                                @RequestParam(required = false, defaultValue = "10") Integer sizePage){
+    @GetMapping("/api/cursos/{cursoId}/modulos")
+    public PageResponse<ModuloResponse> findByCurso(@PathVariable @Positive Long cursoId,
+                                                    @RequestParam(required = false, defaultValue = "0") Integer page,
+                                                    @RequestParam(required = false, defaultValue = "10") Integer sizePage) {
 
-        Page<Modulo> pageResult = cursoId != null
-                ? moduloService.findByCursoId(cursoId, page, sizePage)
-                : moduloService.findAll(page, sizePage);
-
+        Page<Modulo> pageResult = moduloService.findByCursoId(cursoId, page, sizePage);
         return PageResponse.from(pageResult.map(ModuloMapper::toResponse));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/modulos/{id}")
     public ResponseEntity<ModuloResponse> findById(@PathVariable @Positive Long id){
         Modulo modulo = moduloService.findById(id);
         return ResponseEntity.ok(ModuloMapper.toResponse(modulo));
     }
 
-    @PostMapping
-    public ResponseEntity<ModuloResponse> create(@RequestBody @Valid ModuloRequest request){
-        Modulo modulo = new Modulo();
-        modulo.setTitulo(request.titulo());
-        modulo.setCargaHoraria(request.cargaHoraria());
-        modulo.setOrdem(request.ordem());
-        Modulo created = moduloService.create(modulo);
-        return ResponseEntity.ok(ModuloMapper.toResponse(created));
+    @PostMapping("/api/cursos/{cursoId}/modulos")
+    public ResponseEntity<ModuloResponse> create(@PathVariable @Positive Long cursoId,
+                                                 @RequestBody @Valid ModuloRequest request) {
+        Modulo created = moduloService.create(cursoId, request);
+        return ResponseEntity.created(URI.create("/api/modulos/" + created.getId()))
+                .body(ModuloMapper.toResponse(created));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ModuloResponse> update(@PathVariable @Positive Long id, @RequestBody @Valid ModuloRequest request){
-        Modulo modulo = moduloService.findById(id);
-        modulo.setTitulo(request.titulo());
-        modulo.setCargaHoraria(request.cargaHoraria());
-        modulo.setOrdem(request.ordem());
-
-        Modulo updated = moduloService.update(id, modulo);
-        return ResponseEntity.ok(ModuloMapper.toResponse(updated));
-    }
-
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/modulos/{id}")
     public ResponseEntity<Void> delete(@PathVariable @Positive Long id){
         moduloService.delete(id);
         return ResponseEntity.noContent().build();

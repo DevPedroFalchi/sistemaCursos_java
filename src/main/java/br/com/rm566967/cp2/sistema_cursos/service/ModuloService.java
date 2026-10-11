@@ -1,4 +1,5 @@
 package br.com.rm566967.cp2.sistema_cursos.service;
+import br.com.rm566967.cp2.sistema_cursos.dto.ModuloRequest;
 import br.com.rm566967.cp2.sistema_cursos.model.Modulo;
 import org.springframework.data.domain.Page;
 
@@ -10,7 +11,7 @@ public interface ModuloService {
     
 
     Modulo findById(Long id);
-    Modulo create(Modulo modulo);
+    Modulo create(Long cursoId, ModuloRequest request);
     Modulo update(Long id, Modulo updated);
     void delete(Long id);
 }
